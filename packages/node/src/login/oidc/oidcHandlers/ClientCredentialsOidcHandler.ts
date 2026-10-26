@@ -77,7 +77,7 @@ export default class ClientCredentialsOidcHandler implements IOidcHandler {
     let dpopKey: KeyPair | undefined;
 
     if (oidcLoginOptions.dpop) {
-      dpopKey = await generateDpopKeyPair();
+      dpopKey = await generateDpopKeyPair({ extractable: true });
       // The alg property isn't set by exportJWK, so set it manually.
       [dpopKey.publicKey.alg] = PREFERRED_SIGNING_ALG;
     }

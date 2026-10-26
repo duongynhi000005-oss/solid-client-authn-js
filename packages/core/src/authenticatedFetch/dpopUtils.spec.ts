@@ -96,10 +96,18 @@ describe("createDpopHeader", () => {
 });
 
 describe("generateDpopKeyPair", () => {
-  it("generates a public, private key pair", async () => {
+  it("generates a public, private key pair with a non-extractable private key by default", async () => {
     const keyPair = await generateDpopKeyPair();
     expect(keyPair.publicKey).toBeDefined();
     expect(keyPair.privateKey).toBeDefined();
     expect(keyPair.publicKey.alg).toBe("ES256");
+    expect(keyPair.privateKey.extractable).toBe(false);
+    await expect(exportJWK(keyPair.privateKey)).rejects.toThrow();
+  });
+
+  it("allows generating an extractable private key when explicitly requested", async () => {
+    const keyPair = await generateDpopKeyPair({ extractable: true });
+    expect(keyPair.privateKey.extractable).toBe(true);
+    await expect(exportJWK(keyPair.privateKey)).resolves.toBeDefined();
   });
 });

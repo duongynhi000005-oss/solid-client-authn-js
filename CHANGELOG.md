@@ -9,6 +9,12 @@ This project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html
 
 The following changes have been implemented but not released yet:
 
+### Bugfixes
+
+#### core
+
+- `generateDpopKeyPair` now defaults to generating non-extractable private keys (`extractable: false`) so that browser-based DPoP private keys cannot be exported from WebCrypto (#4458).
+
 ## [5.0.1](https://github.com/inrupt/solid-client-authn-js/releases/tag/v5.0.1) - 2026-09-25
 
 ### New features

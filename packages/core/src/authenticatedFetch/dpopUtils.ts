@@ -18,7 +18,7 @@
 // SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-import type { JWK, CryptoKey } from "jose";
+import type { JWK, CryptoKey, GenerateKeyPairOptions } from "jose";
 import { SignJWT, generateKeyPair, exportJWK } from "jose";
 import { v4 } from "uuid";
 import { PREFERRED_SIGNING_ALG } from "../constant";
@@ -68,10 +68,12 @@ export async function createDpopHeader(
     .sign(dpopKey.privateKey, {});
 }
 
-export async function generateDpopKeyPair(): Promise<KeyPair> {
+export async function generateDpopKeyPair(
+  options?: GenerateKeyPairOptions,
+): Promise<KeyPair> {
   const { privateKey, publicKey } = await generateKeyPair(
     PREFERRED_SIGNING_ALG[0],
-    { extractable: true },
+    options,
   );
   const dpopKeyPair = {
     privateKey,
